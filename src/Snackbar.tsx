@@ -149,7 +149,7 @@ const Snackbar = React.forwardRef<SnackbarRefType, SnackbarProps>(
          */
         duration={Number.POSITIVE_INFINITY}
         wrapperStyle={wrapperStyle}
-        style={style}
+        style={style as any}
         visible={visible}
       >
         {children}
@@ -163,8 +163,10 @@ export default Snackbar;
 const styles = StyleSheet.create({
   snackbar: {
     position: 'relative',
+    zIndex: 9999,
   },
   wrapper: {
     position: 'relative',
+    zIndex: 9999,
   },
 });
