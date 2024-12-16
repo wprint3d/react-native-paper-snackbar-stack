@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import SnackbarContext, {
   SnackbarHorizontalPosition,
   ProviderContext,
@@ -61,15 +61,15 @@ const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
   wrapperStyle,
 }) => {
   if (maxSnack < 1) throw new Error('maxSnack must be greater than 0');
-  const [snacks, setSnacks] = React.useState<SnackbarType[]>([]);
+  const [snacks, setSnacks] = useState<SnackbarType[]>([]);
 
-  const snackbarRefs = React.useRef<Record<string, SnackbarRefType>>({});
-  const snackQueue = React.useRef<SnackbarType[]>([]);
+  const snackbarRefs = useRef<Record<string, SnackbarRefType>>({});
+  const snackQueue = useRef<SnackbarType[]>([]);
 
   /**
    * adds a new snackbar in stack
    */
-  const enqueueSnackbar: ProviderContext['enqueueSnackbar'] = React.useCallback(
+  const enqueueSnackbar: ProviderContext['enqueueSnackbar'] = useCallback(
     (options) => {
       const uniqueId = new Date().valueOf() + '' + Math.random() * 100;
 
@@ -107,7 +107,7 @@ const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
   /**
    * closes a snackbar with the given key
    */
-  const closeSnackbar: ProviderContext['closeSnackbar'] = React.useCallback(
+  const closeSnackbar: ProviderContext['closeSnackbar'] = useCallback(
     (key) => {
       if (typeof key !== 'string' || key === '')
         throw new Error('No key is provided');
